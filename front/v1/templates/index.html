@@ -1,0 +1,41 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Antonio Pol - Desarrollador Web</title><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><!--if lt IE 9script(src='http://html5shim.googlecode.com/svn/trunk/html5.js')
+script(src='http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js')-->
+  </head>
+  <body ng-app="app">
+    <div ng-controller="mainCtrl as m">
+      <input type="text" ng-model="m.user">
+      <input type="password" ng-model="m.password">
+      <button ng-click="m.login()">ENTRAR</button>
+      <div ng-show="m.logged">
+        logged
+      </div>
+    </div>
+    <script src="../lib/angular/angular.js"></script>
+    <script>
+      var app = angular.module("app",[]);
+      app.controller("mainCtrl", function($http){
+        this.login = function(){
+
+          var data = {user: this.user, password: this.password};
+          $http.post('http://localhost:1337/admin_login', data).
+          success(function(data, status, headers, config) {
+            this.logged = true;
+            debugger;
+            // this callback will be called asynchronously
+            // when the response is available
+          }).
+          error(function(data, status, headers, config) {
+            debugger;
+            this.err = true;
+            // called asynchronously if an error occurs
+            // or server returns response with an error status.
+          });
+        };
+      });
+    </script>
+</body>
+</html>
